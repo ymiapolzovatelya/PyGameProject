@@ -33,6 +33,7 @@ class Lc(pygame.sprite.Sprite):
         self.image = Lc.image
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
+        bullets.add(self)
 
 
 class Bg(pygame.sprite.Sprite):
@@ -52,6 +53,29 @@ class Bullet(pygame.sprite.Sprite):
         super().__init__(bullets)
         self.image = Bullet.image
         self.rect = self.image.get_rect()
+        self.rect.x = player.rect.x + player.rect.width
+        self.rect.y = player.rect.y
+        self.view = player.view
+        self.sv = player.sv
+        self.s = player.horizontal_speed
+        self.x_speed = 0
+        self.y_speed = 0
+        bullets.add(self)
+
+    def update(self):
+        if self.sv == 'up':
+            self.y_speed = -10
+        elif self.sv == 'down':
+            self.y_speed = 10
+        else:
+            self.y_speed = 0
+        if self.s == 0 and self.sv == 'up':
+            self.x_speed = 0
+        elif self.view == 'right':
+            self.x_speed = 10
+        elif self.view == 'left':
+            self.x_speed = -10
+        self.rect = self.rect.move(self.x_speed, self.y_speed)
 
 
 class Player(pygame.sprite.Sprite):
@@ -192,6 +216,8 @@ while started:
                 player.sv = 'up'
             if event.key == pygame.K_s:
                 player.sv = 'down'
+            if event.key == pygame.K_d:
+                Bullet()
             elif event.key == pygame.K_SPACE:
                 if pygame.sprite.collide_mask(player, level_collision):
                     player.jump = True
@@ -209,7 +235,9 @@ while started:
     screen.fill('white')
     backgrounds.draw(screen)
     all_sprites.draw(screen)
+    bullets.draw(screen)
     players.draw(screen)
+    bullets.update()
     player.update(player.anim_name)
     camera.update(player)
     for sprite in all_sprites:
