@@ -25,7 +25,7 @@ def cut_sheet(name, sheet, columns, rows):
 WIDTH = 600
 HEIGHT = 480
 windowSize = (WIDTH,HEIGHT)
-FPS = 40
+FPS = 50
 screen = pygame.display.set_mode(windowSize)
 game_time = pygame.time.Clock()
 started = True
@@ -37,7 +37,7 @@ RIGHT_BOUND = -6164
 GRAV = 0.5
 
 # player
-SPEED = 4
+SPEED = 20
 JUMP = -10
 
 # animations

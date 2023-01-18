@@ -18,6 +18,7 @@ class Camera(object):
                 self.dx = 0
             elif obj.rect.x < RIGHT_BOUND and obj not in enemieseses:
                 obj.rect.x = RIGHT_BOUND
+                player.rect.x = 285
                 self.dx = 0
             elif player.rect.x != 285 and obj in enemieseses:
                 obj.rect.x = obj.x
@@ -87,7 +88,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(players)
         self.image = ANIMATIONS['stay_r'][0]
-        self.rect = pygame.Rect(100, 170, 30, 40)
+        self.rect = pygame.Rect(5900, 170, 30, 40)
         self.frame = 0
         self.it = 0
         self.vertical_speed = 0
@@ -244,9 +245,10 @@ while started:
     screen.fill('white')
     backgrounds.draw(screen)
     all_sprites.draw(screen)
+    enemieses.draw(screen)
     bullets.draw(screen)
     players.draw(screen)
-    enemieses.draw(screen)
+
     bullets.update()
     enemieses.update()
     player.update(player.anim_name)
