@@ -53,7 +53,7 @@ class Bullet(pygame.sprite.Sprite):
         super().__init__(bullets)
         self.image = Bullet.image
         self.rect = self.image.get_rect()
-        self.rect.x = player.rect.x + player.rect.width
+        self.rect.x = player.rect.x + player.rect.width // 2
         self.rect.y = player.rect.y
         self.view = player.view
         self.sv = player.sv
@@ -160,7 +160,9 @@ class Player(pygame.sprite.Sprite):
                 self.vertical_speed = 10
             self.jump = False
         else:
-            if self.jump:
+            if self.jump and self.lie:
+                self.vertical_speed = -JUMP
+            elif self.jump:
                 self.vertical_speed = JUMP
             else:
                 self.vertical_speed = 0
