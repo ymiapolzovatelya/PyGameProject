@@ -82,6 +82,10 @@ class Bullet(pygame.sprite.Sprite):
         elif self.view == 'left':
             self.x_speed = -10
         self.rect = self.rect.move(self.x_speed, self.y_speed)
+        if pygame.sprite.spritecollide(self, enemieses, True):
+            self.kill()
+        if not self.rect.colliderect(0, 0, 800, 600):
+            self.kill()
 
 
 class Player(pygame.sprite.Sprite):
@@ -257,6 +261,5 @@ while started:
         camera.apply(sprite)
     pygame.display.flip()
     game_time.tick(FPS)
-    print(player.rect.x, player.rect.y)
 pygame.quit()
 sys.exit()
