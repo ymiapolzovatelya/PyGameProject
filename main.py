@@ -3,6 +3,7 @@ import sys
 import pygame.sprite
 
 from settings import *
+from enemies import enemieses, enemieseses
 
 
 class Camera(object):
@@ -12,12 +13,16 @@ class Camera(object):
     def apply(self, obj):
         if obj != player:
             obj.rect.x += self.dx
-            if obj.rect.x > 0:
+            if obj.rect.x > 0 and obj not in enemieseses:
                 obj.rect.x = 0
                 self.dx = 0
-            if obj.rect.x < RIGHT_BOUND:
+            elif obj.rect.x < RIGHT_BOUND and obj not in enemieseses:
                 obj.rect.x = RIGHT_BOUND
                 self.dx = 0
+            elif player.rect.x != 285 and obj in enemieseses:
+                obj.rect.x = obj.x
+                self.dx = 0
+
         elif obj == player:
             obj.rect.x += self.dx
 
@@ -191,7 +196,9 @@ background = Bg()
 level_collision = Lc()
 player = Player()
 
+
 all_sprites.add(backgrounds, players, l_collision, bullets)
+all_sprites.add(enemieses)
 
 pygame.init()
 name = 'stay_r'
@@ -239,12 +246,15 @@ while started:
     all_sprites.draw(screen)
     bullets.draw(screen)
     players.draw(screen)
+    enemieses.draw(screen)
     bullets.update()
+    enemieses.update()
     player.update(player.anim_name)
     camera.update(player)
     for sprite in all_sprites:
         camera.apply(sprite)
     pygame.display.flip()
     game_time.tick(FPS)
+    print(player.rect.x, player.rect.y)
 pygame.quit()
 sys.exit()
