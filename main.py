@@ -52,6 +52,8 @@ class Bg(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
+bulletses = []
+
 class Bullet(pygame.sprite.Sprite):
     image = load_image('bullet.png')
 
@@ -67,6 +69,7 @@ class Bullet(pygame.sprite.Sprite):
         self.x_speed = 0
         self.y_speed = 0
         bullets.add(self)
+        bulletses.append(self)
 
     def update(self):
         if self.sv == 'up':
