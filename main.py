@@ -84,6 +84,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.rect.move(self.x_speed, self.y_speed)
         if pygame.sprite.spritecollide(self, enemieses, True):
             self.kill()
+            hit.play()
         if not self.rect.colliderect(0, 0, 800, 600):
             self.kill()
 
@@ -229,6 +230,14 @@ def start_screen():
 
 start_screen()
 
+pygame.mixer.music.load('sounds\Contra_Contravirt_OC_ReMix.ogv')
+pygame.mixer.music.play()
+
+jump = pygame.mixer.Sound('sounds\Jump.wav')
+hit = pygame.mixer.Sound('sounds\Hit.wav')
+shoot = pygame.mixer.Sound('sounds\Shoot.wav')
+
+
 while started:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -251,9 +260,11 @@ while started:
                 player.sv = 'down'
             if event.key == pygame.K_d:
                 Bullet()
+                shoot.play()
             elif event.key == pygame.K_SPACE:
                 if pygame.sprite.collide_mask(player, level_collision):
                     player.jump = True
+                    jump.play()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                 player.horizontal_speed = 0
