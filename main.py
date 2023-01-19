@@ -92,7 +92,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(players)
         self.image = ANIMATIONS['stay_r'][0]
-        self.rect = pygame.Rect(5900, 170, 30, 40)
+        self.rect = pygame.Rect(200, 170, 30, 40)
         self.frame = 0
         self.it = 0
         self.vertical_speed = 0
@@ -209,6 +209,25 @@ pygame.init()
 name = 'stay_r'
 x = 0
 y = 0
+
+
+def start_screen():
+    fon = pygame.transform.scale(load_image('start.jpg'), (WIDTH, HEIGHT))
+    screen.blit(fon, (0, 0))
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN or \
+                    event.type == pygame.MOUSEBUTTONDOWN:
+                return
+        pygame.display.flip()
+        game_time.tick(FPS)
+
+
+start_screen()
 
 while started:
     for event in pygame.event.get():

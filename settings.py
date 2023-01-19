@@ -37,7 +37,7 @@ RIGHT_BOUND = -6164
 GRAV = 0.5
 
 # player
-SPEED = 20
+SPEED = 4
 JUMP = -10
 
 # animations
